@@ -30,9 +30,9 @@ class PDFRAG:
 
     def __init__(
         self,
-        chunk_size: int = 220,
-        chunk_overlap: int = 40,
-        min_score: float = 0.12,
+        chunk_size: int = 400,
+        chunk_overlap: int = 70,
+        min_score: float = 0.07,
         model_name: str | None = None,
     ):
         self.chunk_size = chunk_size
@@ -67,7 +67,7 @@ class PDFRAG:
         self.chunk_vectors = self.vectorizer.fit_transform(self.chunks)
         return len(self.chunks)
 
-    def ask(self, question: str, top_k: int = 4) -> RetrievalResult:
+    def ask(self, question: str, top_k: int = 5) -> RetrievalResult:
         if not self.vectorizer or self.chunk_vectors is None or not self.chunks:
             raise ValueError("No document indexed. Upload and process PDF files first.")
 
@@ -150,7 +150,7 @@ class PDFRAG:
                         ),
                     },
                 ],
-            )
+            ) 
 
             answer = (response.choices[0].message.content or "").strip()
             if not answer:
